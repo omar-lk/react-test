@@ -1,0 +1,15 @@
+.albumsContainer{
+    width: 35½;
+    background-color: #323232;
+    height: 100vh;
+    overflow: scroll;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+  li{
+      color: #d8d8d8;
+  }
