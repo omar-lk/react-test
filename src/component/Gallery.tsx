@@ -4,11 +4,15 @@ import "../styles/Gallery.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import AddImagePopup from "./AddImagePopup";
+import DeleteImagePopup from "./DeleteImagePopup";
+
 const Gallery = () => {
   let [photos, setPhotos] = useState<any[]>([]);
   let { id } = useParams();
+  let { title } = useParams();
 
   let [showAddPopup, setShowAddPopup] = useState<any[]>(false);
+  let [showDeletePopup, setShowDeletePopup] = useState<any[]>(false);
 
   useEffect(() => {
     fetch(
@@ -24,8 +28,20 @@ const Gallery = () => {
 
   function showPopup() {
     setShowAddPopup(!showAddPopup);
+    if (showDeletePopup) {
+      setShowDeletePopup(false);
+    }
     console.log(showAddPopup);
   }
+
+  function showDeletePopupfunction() {
+    setShowDeletePopup(!showDeletePopup);
+    if (showAddPopup) {
+      setShowAddPopup(false);
+    }
+    console.log(showDeletePopup);
+  }
+
   return (
     <div className="galleryContainer">
       {photos &&
@@ -38,19 +54,27 @@ const Gallery = () => {
         })}
       <div className="footer">
         <span>
-          <button className="button buttonDelete">
-            <FontAwesomeIcon icon={faTrash} />
+          <button
+            className="button buttonDelete"
+            onClick={showDeletePopupfunction}
+          >
+            <FontAwesomeIcon icon={faTrash} className="highlight" />
           </button>
-          delete
+          delete photo {title}
         </span>
         <span>
           Add image
           <button className="button buttonAdd" onClick={showPopup}>
-            <FontAwesomeIcon icon={faPlus} />
+            <FontAwesomeIcon icon={faPlus} className="highlight" />
           </button>
         </span>
       </div>
-      {showAddPopup ? <AddImagePopup /> : null}
+      {showAddPopup ? (
+        <AddImagePopup closePopup={showPopup} albumTitle={title} />
+      ) : null}
+      {showDeletePopup ? (
+        <DeleteImagePopup closePopup={showDeletePopupfunction} />
+      ) : null}
     </div>
   );
 };

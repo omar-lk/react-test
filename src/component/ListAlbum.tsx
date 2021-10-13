@@ -25,7 +25,7 @@ const ListAlbum = () => {
                 <NavLink
                   activeClassName="active-link"
                   className="link"
-                  to={`/album/${album.id}`}
+                  to={`/album/${album.id}/${album.title}`}
                 >
                   Photo {album.title.substring(0, 6)}...
                 </NavLink>

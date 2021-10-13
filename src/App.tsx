@@ -11,7 +11,7 @@ function App() {
         <Router>
           <ListAlbum />
           <Switch>
-            <Route path="/album/:id">
+            <Route path="/album/:id/:title">
               <Gallery />
             </Route>
           </Switch>

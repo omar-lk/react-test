@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-const AddImagePopup = () => {
+const AddImagePopup = (props) => {
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     console.log(data);
@@ -15,22 +15,28 @@ const AddImagePopup = () => {
       }
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
+      .then((json) => {
+        console.log(json);
+        props.closePopup();
+      });
   };
   return (
     <div className="popup">
+      <button id="x" onClick={props.closePopup}>
+        X
+      </button>
       <form onSubmit={handleSubmit(onSubmit)} className="form-container">
-        <p className="popupTitle">Add Image to</p>
+        <p className="popupTitle">Add Image to photo {props.albumTitle}</p>
         <div className="inputContainer">
           <input
             type="text"
             placeholder="Enter Image name"
-            {...register("name")}
+            {...register("name", { required: true })}
           />
           <input
             type="text"
             placeholder="Enter Image Url"
-            {...register("image")}
+            {...register("image", { required: true })}
           />
           <button type="submit" className="btn">
             Save Image
