@@ -10,7 +10,7 @@ const Gallery = () => {
   let [photos, setPhotos] = useState<any[]>([]);
   let { id } = useParams();
   let { title } = useParams();
-
+  const [style, setStyle] = useState("imageComtiner");
   let [showAddPopup, setShowAddPopup] = useState<any[]>(false);
   let [showDeletePopup, setShowDeletePopup] = useState<any[]>(false);
 
@@ -42,13 +42,24 @@ const Gallery = () => {
     console.log(showDeletePopup);
   }
 
+  const changeStyle = () => {
+    console.log("you just clicked");
+
+    setStyle("selected");
+  };
+
   return (
     <div className="galleryContainer">
       {photos &&
         photos.map((photo, i) => {
           return (
-            <div className="imageComtiner">
-              <img src={photo.url}></img>
+            <div>
+              <img
+                className={style}
+                key={i}
+                onClick={changeStyle}
+                src={photo.url}
+              ></img>
             </div>
           );
         })}

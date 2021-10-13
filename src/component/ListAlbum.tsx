@@ -1,3 +1,5 @@
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "../styles/albums.css";
@@ -33,6 +35,12 @@ const ListAlbum = () => {
             );
           })}
       </ul>
+      {/* <span>
+        Add image
+        <button className="button buttonAdd">
+          <FontAwesomeIcon icon={faPlus} className="highlight" />
+        </button>
+      </span> */}
     </div>
   );
 };

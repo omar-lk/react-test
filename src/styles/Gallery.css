@@ -139,3 +139,6 @@ input[type="text"] {
 .highlight {
   color: black;
 }
+.selected {
+  box-shadow: 12px 12px 14px -11px #afafaf;
+}
