@@ -3,9 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "../styles/albums.css";
+import AddAlbumPopup from "../component/AddAlbumPopup";
 
 const ListAlbum = () => {
   let [albums, setAlbums] = useState<any[]>([]);
+  let [showAlbumPopup, setShowAlbumPopup] = useState<any[]>(false);
+  let [refresh, setRefresh] = useState<any[]>(false);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/albums?_start=0&_limit=6")
@@ -15,7 +18,11 @@ const ListAlbum = () => {
         console.log(data);
         setAlbums(data);
       });
-  }, []);
+  }, [refresh]);
+
+  function showPopup() {
+    setShowAlbumPopup(!showAlbumPopup);
+  }
 
   return (
     <div className="albumsContainer">
@@ -34,13 +41,21 @@ const ListAlbum = () => {
               </li>
             );
           })}
+        <li>
+          Add Album
+          <button className="button buttonAdd" onClick={showPopup}>
+            <FontAwesomeIcon icon={faPlus} className="highlight" />
+          </button>
+        </li>
       </ul>
-      {/* <span>
-        Add image
-        <button className="button buttonAdd">
-          <FontAwesomeIcon icon={faPlus} className="highlight" />
-        </button>
-      </span> */}
+      {showAlbumPopup ? (
+        <AddAlbumPopup
+          closePopup={showPopup}
+          refresh={() => {
+            setRefresh(!refresh);
+          }}
+        />
+      ) : null}
     </div>
   );
 };

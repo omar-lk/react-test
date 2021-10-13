@@ -3,10 +3,14 @@ import "../styles/deletPopUpStyle.css";
 
 const DeleteImagePopup = (props) => {
   const deleteImage = () => {
-    fetch("https://jsonplaceholder.typicode.com/albums/1/photos/1", {
-      method: "DELETE"
-    });
+    fetch(
+      `https://jsonplaceholder.typicode.com/albums/${props.albumId}/photos/${props.imageId}`,
+      {
+        method: "DELETE"
+      }
+    );
     props.closePopup();
+    props.filter();
   };
 
   return (

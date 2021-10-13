@@ -11,8 +11,11 @@ const Gallery = () => {
   let { id } = useParams();
   let { title } = useParams();
   const [style, setStyle] = useState("imageComtiner");
+
   let [showAddPopup, setShowAddPopup] = useState<any[]>(false);
   let [showDeletePopup, setShowDeletePopup] = useState<any[]>(false);
+  let [activeIndex, setActiveIndex] = useState<any[]>("");
+  let [selectedImageId, setSelectedImageId] = useState<any[]>();
 
   useEffect(() => {
     fetch(
@@ -26,6 +29,15 @@ const Gallery = () => {
       });
   }, [id]);
 
+  function filterDeletedImage() {
+    setPhotos(
+      photos.filter((photo) => {
+        return photos.id !== selectedImageId;
+      })
+    );
+    console.log(photos);
+  }
+
   function showPopup() {
     setShowAddPopup(!showAddPopup);
     if (showDeletePopup) {
@@ -35,18 +47,19 @@ const Gallery = () => {
   }
 
   function showDeletePopupfunction() {
+    if (selectedImageId == undefined) {
+      alert("you need to select Image before");
+      return;
+    }
     setShowDeletePopup(!showDeletePopup);
     if (showAddPopup) {
       setShowAddPopup(false);
     }
     console.log(showDeletePopup);
   }
-
-  const changeStyle = () => {
-    console.log("you just clicked");
-
-    setStyle("selected");
-  };
+  function imageSelected(photo) {
+    setSelectedImageId(photo.id);
+  }
 
   return (
     <div className="galleryContainer">
@@ -55,9 +68,12 @@ const Gallery = () => {
           return (
             <div>
               <img
-                className={style}
-                key={i}
-                onClick={changeStyle}
+                data-id={i}
+                onClick={() => {
+                  setActiveIndex(i);
+                  imageSelected(photo);
+                }}
+                className={i === activeIndex ? "selected" : null}
                 src={photo.url}
               ></img>
             </div>
@@ -84,7 +100,12 @@ const Gallery = () => {
         <AddImagePopup closePopup={showPopup} albumTitle={title} />
       ) : null}
       {showDeletePopup ? (
-        <DeleteImagePopup closePopup={showDeletePopupfunction} />
+        <DeleteImagePopup
+          imageId={selectedImageId}
+          albumId={id}
+          filter={filterDeletedImage}
+          closePopup={showDeletePopupfunction}
+        />
       ) : null}
     </div>
   );

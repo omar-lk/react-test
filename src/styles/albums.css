@@ -31,6 +31,7 @@ a {
   display: flex;
   justify-content: center;
   padding-top: 93px;
+  border-radius: 20px;
 }
 ul {
   list-style: none;

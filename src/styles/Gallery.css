@@ -23,6 +23,7 @@ img {
   /* margin: 84px; */
   padding: 99px 0px 20px 0px;
   overflow: auto;
+  border-radius: 20px;
 }
 .imageComtiner {
   width: 150px;
@@ -140,5 +141,5 @@ input[type="text"] {
   color: black;
 }
 .selected {
-  box-shadow: 12px 12px 14px -11px #afafaf;
+  box-shadow: 3px 1px 14px 1px #afafaf;
 }
