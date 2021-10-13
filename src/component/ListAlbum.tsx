@@ -1,29 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import "../styles/albums.css"
+import { Link, NavLink } from "react-router-dom";
+import "../styles/albums.css";
 
 const ListAlbum = () => {
-
   let [albums, setAlbums] = useState<any[]>([]);
 
-
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/albums")
+    fetch("https://jsonplaceholder.typicode.com/albums?_start=0&_limit=6")
       .then((res) => res.json())
       .then((data) => {
         console.log("data");
         console.log(data);
-         setAlbums(data);
+        setAlbums(data);
       });
   }, []);
 
   return (
     <div className="albumsContainer">
       <ul>
-        {albums&& albums.map((album:any, i) => {
-          
-        return <Link to={`/album/${album.id}`}> <li key={i}>Photo {album.title} {album.id}</li></Link>;
-        })}
+        {albums &&
+          albums.map((album: any, i) => {
+            return (
+              <li key={i}>
+                <NavLink
+                  activeClassName="active-link"
+                  className="link"
+                  to={`/album/${album.id}`}
+                >
+                  Photo {album.title.substring(0, 6)}...
+                </NavLink>
+              </li>
+            );
+          })}
       </ul>
     </div>
   );
